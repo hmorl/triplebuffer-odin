@@ -6,12 +6,9 @@ Triple buffer implementation in [Odin](https://odin-lang.org/).
 
 Triple buffering is a technique for safely sharing data between a single producer and a single consumer, and is a specific case of [multiple buffering](https://en.wikipedia.org/wiki/Multiple_buffering).
 
-It is ideal for situations where the producer and consumer need to run at different rates but in still in a time-sensitive fashion  (i.e. real time), and where the consumer does not care about receiving every single version of data that the producer produces - it only wants whatever the latest is at any given time.
+It is ideal for situations where the producer and consumer need to run at different rates but still in a time-sensitive fashion  (i.e. "real time"), and where the consumer does not care about receiving every single version of data that the producer produces - it only wants whatever the latest is.
 
-Double buffering is also a common technique but it relies on synchronising the producer/consumer in some way, for example the producer waits until the consumer has read the latest data 
-
-Triple buffering, by definition, is more memory intensive but for casual purposes (desktop systems and not huge data) this generally isn’t an issue.
-
+Double buffering is also a common technique but it relies on synchronising the producer/consumer in some way, for example the producer waits until the consumer has read the latest data, so could get blocked.
 
 ### Use cases
 
@@ -21,8 +18,8 @@ Triple buffering, by definition, is more memory intensive but for casual purpose
 
 ## Running the tests
 
-1. Make sure you have a build of the Odin compiler on your system.
-2. Run `make-test` or 
+1. Install/build the Odin compiler. See the Odin [Getting Started](https://odin-lang.org/docs/install/) guide for more info.
+2. Run `make` to build the test runner in `out/testrunner` or `make test` to build and run. N.B. if you don't have Make on your system, you can just run the commands defined in the Makefile directly.
 
 ## How to use in your project
 
@@ -32,6 +29,5 @@ See the multithreaded test in `tests/test_triplebuffer.odin` for example usage.
 
 ## Further reading
 
-Triple Buffering as a Concurrency Mechanism (II) - Remi's Thoughta
+[Triple Buffering as a Concurrency Mechanism (II)](https://remis-thoughts.blogspot.com/2012/01/triple-buffering-as-concurrency_30.html) - Remi's Thoughts
 
-https://remis-thoughts.blogspot.com/2012/01/triple-buffering-as-concurrency_30.html
