@@ -1,9 +1,6 @@
 package test
 
 import tb "../"
-import "core:fmt"
-import "core:os"
-import "core:slice"
 import "core:sync"
 import "core:testing"
 import "core:thread"
@@ -36,7 +33,7 @@ test_tb_single_threaded :: proc(t: ^testing.T) {
 	buffer: tb.Triple_Buffer(int)
 	tb.init(&buffer)
 
-	tb.write(&buffer, 42)
+	tb.publish_value(&buffer, 42)
 
 	value, is_new := tb.read(&buffer)
 	testing.expect_value(t, value^, 42)
@@ -46,9 +43,9 @@ test_tb_single_threaded :: proc(t: ^testing.T) {
 	testing.expect_value(t, value^, 42)
 	testing.expect_value(t, is_new, false)
 
-	tb.write(&buffer, 32)
-	tb.write(&buffer, 13)
-	tb.write(&buffer, 999)
+	tb.publish_value(&buffer, 32)
+	tb.publish_value(&buffer, 13)
+	tb.publish_value(&buffer, 999)
 
 	value, is_new = tb.read(&buffer)
 	testing.expect_value(t, value^, 999)
@@ -77,7 +74,8 @@ Thread_Data :: struct {
 
 producer_proc :: proc(data: ^Thread_Data, interval: time.Duration) {
 	for i in 1 ..= 500 {
-		tb.write(&data.buffer, i)
+		tb.get_write_ptr(&data.buffer)^ = i
+		tb.publish(&data.buffer)
 		time.sleep(interval)
 	}
 
